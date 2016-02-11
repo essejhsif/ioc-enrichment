@@ -1,5 +1,4 @@
 """ Indicator of Compromise (IOC) enrichment script.
-
 Prints resulting enrichment to stdout.
 """
 import re
@@ -18,18 +17,15 @@ class RFEnricher(object):
     pattern_to_ioc = {  
         '{0}|{1}'.format(ipv4_regexp, ipv6_regexp):
         {
-            'data_group': 'EnrichIpAddress',
-            'function': 'enriched-ip-address',
+            'data_group': 'IpAddress',
             'id_prefix': 'ip'
         },
         idn_regexp: {
-            'data_group': 'EnrichInternetDomainName',
-            'function': 'enriched-internet-domain-name',
+            'data_group': 'InternetDomainName',
             'id_prefix': 'idn'        
         },
         hash_regexp: {
-            'data_group': 'EnrichHash',
-            'function': 'enriched-hash',
+            'data_group': 'Hash',
             'id_prefix': 'hash'
         }
     }
@@ -73,7 +69,6 @@ class RFEnricher(object):
             return "No enrichment available."
         q = {
           "cluster": {
-            "function": query_config['function'],
             "attributes": [
               {
                 "entity": {
@@ -119,10 +114,3 @@ if __name__ == '__main__':
     iocs, token = parse_args()
     enrichment = RFEnricher(token).enrich(iocs)
     print json.dumps(enrichment, None, indent=2)
-
-
-
-
-
-
-
