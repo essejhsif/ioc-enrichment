@@ -90,6 +90,8 @@ class RFAPI(object):
             if 'instance' in q or 'reference' in q:
                 key = 'instance' if 'instance' in q else 'reference'
                 q[key]['page_start'] = res['next_page_start']
+            elif 'cluster' in q:
+                q['cluster']['page_start'] = res['next_page_start']
             elif 'source' in q:
                 q['source']['page_start'] = res['next_page_start']
             elif 'entity' in q:
